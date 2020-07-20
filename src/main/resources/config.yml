@@ -1,0 +1,47 @@
+set:
+  #Require player to run command again to confirm
+  require-confirm: true
+
+  #How long player has to confirm bounty in seconds
+  confirm-delay: 30
+
+  #Maximum amount of bounties you can set. -1 for unlimited
+  max-set: 3
+
+  #Maximum amount of bounties you can have on you. -1 for unlimited
+  max-have: 10
+
+  fee:
+    #Fee item. Options: hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+    type: DIAMOND
+    #Default fee amount. 0 for free
+    amount: 5
+
+    #Fee amount for anonymous bounties. 0 for free
+    anonymous-amount: 15
+
+  #Black/whitelist for allowed bounty rewards. true = Blacklist, false = Whitelist
+  list-type: true
+
+  #Items on black/whitelist. Options: hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+  list:
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+
+  #Broadcast bounty set message
+  message: true
+
+claim:
+  #Broadcast minecraft death message on bounty claimed
+  death-message: false
+
+  #Broadcast bounty claimed message on bounty claimed
+  claim-message: true
+
+remove:
+  #Require player to run command again to confirm
+  require-confirm: true
+
+  #How long player has to confirm bounty remove in seconds
+  confirm-delay: 30

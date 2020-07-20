@@ -1,0 +1,47 @@
+name: EliteBounty
+version: 1.0
+main: us.potatoboy.elitebounty.EliteBounty
+api-version: 1.16
+description: An item based bounty plugin
+authors: [potatoboy9999]
+commands:
+  bounty:
+    description: Bounty Command
+    usage: /bounty <set§7|§rlist§7|§rinfo§7|§rreward§7|§rremove>
+permissions:
+  elitebounty.admin:
+    description: Gives access to all elite bounty commands
+    default: op
+    children:
+      elitebounty.bounty: true
+      elitebounty.info: true
+      elitebounty.list: true
+      elitebounty.reward: true
+      elitebounty.set: true
+      elitebounty.remove: true
+      elitebounty.claim: true
+      elitebounty.anonymous: true
+  elitebounty.bounty:
+    description: Allows you to run the bounty command
+    default: true
+  elitebounty.info:
+    description: Allows you to get info on specific bounty
+    default: true
+  elitebounty.list:
+    description: Allows you to list all current bounties
+    default: true
+  elitebounty.reward:
+    description: Allows you to view the bounty reward in menu
+    default: true
+  elitebounty.set:
+    description: Allows you to set bounties on other players
+    default: true
+  elitebounty.claim:
+    description: Allows you to claim bounties
+    default: true
+  elitebounty.anonymous:
+    description: Allows you to set bounties anonymously
+    default: true
+  elitebounty.remove:
+    description: Allows you to remove bounties on other players
+    default: op
