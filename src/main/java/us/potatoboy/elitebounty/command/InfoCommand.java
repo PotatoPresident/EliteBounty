@@ -47,7 +47,7 @@ public class InfoCommand extends AbstractCommand {
                 for (Bounty bounty : requestedBounties) {
                     TextComponent listItem = new TextComponent(String.format(Lang.BOUNTY_LIST.toString(),
                             bounty.anonymousSetter ? "Anonymous" : Bukkit.getOfflinePlayer(bounty.setBy).getName(),
-                            bounty.bountyReward.getType().name(),
+                            bounty.getFriendlyRewardName(),
                             bounty.bountyReward.getAmount()));
                     listItem.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND,
                             "/bounty info " +
@@ -83,7 +83,7 @@ public class InfoCommand extends AbstractCommand {
             }
 
             TextComponent rewardText = new TextComponent(String.format(Lang.BOUNTY_REWARD.toString(),
-                    requestedBounty.bountyReward.getType().name(),
+                    requestedBounty.getFriendlyRewardName(),
                     requestedBounty.bountyReward.getAmount()));
             rewardText.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/bounty reward " + args[1] + " " + args[2] + " " + EliteBounty.hiddenArg));
             rewardText.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click To View Reward").create()));

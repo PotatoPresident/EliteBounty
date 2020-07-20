@@ -5,6 +5,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Objects;
 import java.util.UUID;
 
+import static org.apache.commons.lang.WordUtils.capitalize;
+
 public class Bounty {
     public UUID target;
     public ItemStack bountyReward;
@@ -35,5 +37,9 @@ public class Bounty {
     @Override
     public int hashCode() {
         return Objects.hash(target, bountyReward, setBy, setDate, anonymousSetter);
+    }
+
+    public String getFriendlyRewardName() {
+        return capitalize(bountyReward.getType().name().toLowerCase().replaceAll("_", " "));
     }
 }

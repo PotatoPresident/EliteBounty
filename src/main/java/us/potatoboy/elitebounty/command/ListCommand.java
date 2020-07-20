@@ -44,7 +44,7 @@ public class ListCommand extends AbstractCommand {
 
         for (Bounty bounty: bounties) {
             TextComponent listItem = new TextComponent(String.format(Lang.BOUNTY_LIST.toString(), Bukkit.getOfflinePlayer(bounty.target).getName(),
-                    bounty.bountyReward.getType().name(),
+                    bounty.getFriendlyRewardName(),
                     bounty.bountyReward.getAmount()));
             listItem.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND,
                     "/bounty info " + Bukkit.getOfflinePlayer(bounty.target).getName() + " " + Bukkit.getOfflinePlayer(bounty.setBy).getName() + " " + EliteBounty.hiddenArg));

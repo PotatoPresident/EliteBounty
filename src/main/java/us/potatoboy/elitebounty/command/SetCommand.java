@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -166,10 +167,10 @@ public class SetCommand extends AbstractCommand{
             } else {
                 confirming.put(playerSender, bounty);
                 sender.sendMessage(String.format(Lang.CONFIRM_BOUNTY.toString(),
-                        bounty.bountyReward.getType().name(),
+                        bounty.getFriendlyRewardName(),
                         bounty.bountyReward.getAmount(),
                         target.getName(),
-                        fee.getType().name(),
+                        WordUtils.capitalize(fee.getType().name().toLowerCase().replaceAll("_", " ")),
                         fee.getAmount(),
                         eliteBounty.getConfig().getInt("set.confirm-delay")
                 ));
@@ -188,7 +189,7 @@ public class SetCommand extends AbstractCommand{
 
             if (eliteBounty.getConfig().getBoolean("set.message")) {
                 TextComponent rewardText = new TextComponent(String.format(Lang.BOUNTY_REWARD.toString(),
-                        bounty.bountyReward.getType().name(),
+                        bounty.getFriendlyRewardName(),
                         bounty.bountyReward.getAmount()));
                 rewardText.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/bounty reward " + target.getName() + " " + sender.getName() + " " + EliteBounty.hiddenArg));
                 rewardText.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click To View Reward").create()));

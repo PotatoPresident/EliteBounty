@@ -34,7 +34,7 @@ public class BountyListener implements Listener {
                         Bukkit.broadcastMessage(String.format(Lang.DIVIDER.toString(), "BOUNTY COMPLETE"));
                         Bukkit.broadcastMessage(String.format(Lang.TARGET_KILLED.toString(), killer.getName(), event.getEntity().getName()));
                         Bukkit.broadcastMessage(String.format(Lang.BOUNTY_REWARD.toString(),
-                                bounty.bountyReward.getType().name(),
+                                bounty.getFriendlyRewardName(),
                                 bounty.bountyReward.getAmount()));
                     }
 
