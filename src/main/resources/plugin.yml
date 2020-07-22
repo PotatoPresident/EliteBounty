@@ -1,5 +1,5 @@
 name: EliteBounty
-version: 1.0
+version: ${project.version}
 main: us.potatoboy.elitebounty.EliteBounty
 api-version: 1.16
 description: An item based bounty plugin

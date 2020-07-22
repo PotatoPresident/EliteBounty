@@ -1,12 +1,16 @@
 package us.potatoboy.elitebounty;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class EliteBounty extends JavaPlugin {
     private static EliteBounty instance;
@@ -196,5 +200,16 @@ public class EliteBounty extends JavaPlugin {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void getOfflinePlayerAsync(final String name, final Consumer<OfflinePlayer> callback) {
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(name);
+                callback.accept(player);
+            }
+        }.runTaskAsynchronously(this);
     }
 }
