@@ -36,38 +36,42 @@ public class RemoveCommand extends AbstractCommand {
         }
 
         EliteBounty eliteBounty = EliteBounty.getInstance();
-        Bounty requestedBounty = eliteBounty.getBountyFromIds(Bukkit.getOfflinePlayer(args[1]).getUniqueId(), Bukkit.getOfflinePlayer(args[2]).getUniqueId());
+        eliteBounty.getOfflinePlayerAsync(args[1], target1 -> {
+            eliteBounty.getOfflinePlayerAsync(args[2], target2 -> {
+                Bounty requestedBounty = eliteBounty.getBountyFromIds(target1.getUniqueId(), target2.getUniqueId());
 
-        if (requestedBounty == null) {
-            sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
-            return;
-        }
+                if (requestedBounty == null) {
+                    sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
+                    return;
+                }
 
-        //checks if player has confirmed bounty
-        if (eliteBounty.getConfig().getBoolean("set.require-confirm")) {
-            if (confirming.containsKey(sender) && confirming.get(sender).equals(requestedBounty)) {
-                confirming.remove(sender);
-            } else {
-                confirming.put(sender, requestedBounty);
-                sender.sendMessage(String.format(Lang.CONFIRM_REMOVE.toString(),
-                        args[1],
-                        eliteBounty.getConfig().getInt("remove.confirm-delay")
-                ));
-
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(eliteBounty, new Runnable() {
-                    public void run() {
+                //checks if player has confirmed bounty
+                if (eliteBounty.getConfig().getBoolean("set.require-confirm")) {
+                    if (confirming.containsKey(sender) && confirming.get(sender).equals(requestedBounty)) {
                         confirming.remove(sender);
-                    }
-                }, eliteBounty.getConfig().getInt("remove.confirm-delay") * 20);
-                return;
-            }
-        }
+                    } else {
+                        confirming.put(sender, requestedBounty);
+                        sender.sendMessage(String.format(Lang.CONFIRM_REMOVE.toString(),
+                                args[1],
+                                eliteBounty.getConfig().getInt("remove.confirm-delay")
+                        ));
 
-        if (EliteBounty.getInstance().removeBounty(requestedBounty.target, requestedBounty.setBy)) {
-            sender.sendMessage(Lang.BOUNTY_REMOVED.toString());
-        } else {
-            sender.sendMessage(Lang.BOUNTY_REMOVE_ERROR.toString());
-            return;
-        }
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(eliteBounty, new Runnable() {
+                            public void run() {
+                                confirming.remove(sender);
+                            }
+                        }, eliteBounty.getConfig().getInt("remove.confirm-delay") * 20);
+                        return;
+                    }
+                }
+
+                if (EliteBounty.getInstance().removeBounty(requestedBounty.target, requestedBounty.setBy)) {
+                    sender.sendMessage(Lang.BOUNTY_REMOVED.toString());
+                } else {
+                    sender.sendMessage(Lang.BOUNTY_REMOVE_ERROR.toString());
+                    return;
+                }
+            });
+        });
     }
 }
