@@ -45,3 +45,16 @@ remove:
 
   #How long player has to confirm bounty remove in seconds
   confirm-delay: 30
+
+compass:
+  #Require player to run command again to confirm
+  require-confirm: true
+
+  #How long player has to confirm compass in seconds
+  confirm-delay: 30
+
+  fee:
+    #Fee item. Options: hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+    type: DIAMOND
+    #Default fee amount. 0 for free
+    amount: 1

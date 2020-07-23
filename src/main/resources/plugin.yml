@@ -1,5 +1,5 @@
 name: EliteBounty
-version: 1.0
+version: ${project.version}
 main: us.potatoboy.elitebounty.EliteBounty
 api-version: 1.16
 description: An item based bounty plugin
@@ -7,7 +7,7 @@ authors: [potatoboy9999]
 commands:
   bounty:
     description: Bounty Command
-    usage: /bounty <set§7|§rlist§7|§rinfo§7|§rreward§7|§rremove>
+    usage: /bounty <set§7|§rlist§7|§rinfo§7|§rreward§7|§rremove§7|§rcompass>
 permissions:
   elitebounty.admin:
     description: Gives access to all elite bounty commands
@@ -21,6 +21,7 @@ permissions:
       elitebounty.remove: true
       elitebounty.claim: true
       elitebounty.anonymous: true
+      elitebounty.compass: true
   elitebounty.bounty:
     description: Allows you to run the bounty command
     default: true
@@ -41,6 +42,9 @@ permissions:
     default: true
   elitebounty.anonymous:
     description: Allows you to set bounties anonymously
+    default: true
+  elitebounty.compass:
+    description: Allows you to set your compass to the nearest bounty
     default: true
   elitebounty.remove:
     description: Allows you to remove bounties on other players

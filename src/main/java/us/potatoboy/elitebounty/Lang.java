@@ -31,8 +31,11 @@ public enum Lang {
     BLACKLIST("blacklist", "Reward Not Allowed. Banned Items: &a%s", true),
     CONFIRM_BOUNTY("confirm-bounty", "Run Command Again To Confirm Bounty Of &a%s x%s&r On &7%s&r for &a%s x%s&r Fee (%ss)", true),
     CONFIRM_REMOVE("confirm-remove", "Run Command Again To Remove Bounty On &7%s&r (%ss)", true),
+    CONFIRM_COMPASS("confirm-compass", "Run Command Again To Set Compass To Nearest Bounty For &a%s x%s&r Fee (%ss)", true),
     BOUNTIES_ON_PLAYER("bounties-on-player", "Listing All Bounties On &7%s", false),
-    TRUE_FALSE("true-false", "You must type \"true\" or \"false\"", true);
+    COMPASS_SET("compass-set", "Compasses Now Pointing To Last Known Location Of The Nearest Bounty" , true),
+    COMPASS_RESET("compass-reset", "Compass Reset", true),
+    NO_BOUNTIES_WORLD("no-bounties-world", "No Bounties In This Dimension", true);
 
 
     private String path;
