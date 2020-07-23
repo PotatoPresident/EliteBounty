@@ -32,9 +32,9 @@ public class ListCommand extends AbstractCommand {
             return;
         }
 
-        EliteBounty main = EliteBounty.getInstance();
+        EliteBounty eliteBounty = EliteBounty.getInstance();
 
-        ArrayList<Bounty> bounties = main.getBounties();
+        ArrayList<Bounty> bounties = eliteBounty.getBounties();
         if (bounties == null || bounties.isEmpty()) {
             sender.sendMessage(Lang.NO_BOUNTIES.toString());
             return;

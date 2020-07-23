@@ -31,6 +31,9 @@ public class BountyCommand implements CommandExecutor {
             case "remove":
                 cmd = new RemoveCommand(commandSender);
                 break;
+            case "compass":
+                cmd = new CompassCommand(commandSender);
+                break;
         }
 
         if (cmd != null) {

@@ -117,7 +117,6 @@ public class EliteBounty extends JavaPlugin {
     public HashSet<Bounty> getBountiesOnTarget(UUID id) {
         if (bountyConfig.getString("Bounties." + id) == null) return null;
 
-        getLogger().info("here");
         HashSet<Bounty> bounties = new HashSet<>();
         Set<String> bountyList;
 
@@ -126,7 +125,6 @@ public class EliteBounty extends JavaPlugin {
         } catch (Exception e) {
             return null;
         }
-        getLogger().info("here");
 
         for (String bounty: bountyList) {
             try {
@@ -143,7 +141,6 @@ public class EliteBounty extends JavaPlugin {
                 return null;
             }
         }
-        getLogger().info("here");
 
         return bounties;
     }

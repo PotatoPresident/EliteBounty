@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BountyTab implements TabCompleter {
 
-    List<String> arguments = new ArrayList<>(Arrays.asList("set", "list", "info", "reward", "remove"));
+    List<String> arguments = new ArrayList<>(Arrays.asList("set", "list", "info", "reward", "remove", "compass"));
     List<String> trueFalse = new ArrayList<>(Arrays.asList("true", "false"));
 
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
@@ -38,6 +38,11 @@ public class BountyTab implements TabCompleter {
                         return null;
                     case "set":
                         return null;
+                    case "compass":
+                        if ("reset".startsWith(args[1].toLowerCase())) {
+                            result.add("reset");
+                        }
+                        return result;
                 }
 
             case 3:
@@ -49,10 +54,8 @@ public class BountyTab implements TabCompleter {
                     case "reward":
                         return null;
                     case "set":
-                        for (String a : trueFalse) {
-                            if (a.toLowerCase().startsWith(args[2].toLowerCase())) {
-                                result.add(a);
-                            }
+                        if ("anonymous".startsWith(args[2].toLowerCase())) {
+                            result.add("anonymous");
                         }
                         return result;
                 }

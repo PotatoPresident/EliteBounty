@@ -70,9 +70,15 @@ public class SetCommand extends AbstractCommand{
             HashSet<Bounty> bountyHashSet = eliteBounty.getBountiesOnTarget(target.getUniqueId());
             int maxHave = eliteBounty.getConfig().getInt("set.max-have");
 
-            //check if target already has a bounty
+            //check if target has max bounties
             if (bountyHashSet != null && bountyHashSet.size() > maxHave) {
                 sender.sendMessage(String.format(Lang.TARGET_HAS_BOUNTY.toString(), maxHave));
+                return;
+            }
+
+            //check if sender already has bounty on target
+            if (eliteBounty.getBountyFromIds(target.getUniqueId(), playerSender.getUniqueId()) != null) {
+                sender.sendMessage(Lang.INVALID_PLAYER.toString());
                 return;
             }
 
@@ -93,11 +99,10 @@ public class SetCommand extends AbstractCommand{
                 }
             }
 
-
             boolean anonymousSetter = false;
             //check if anonymous setter
             if (args.length > 2) {
-                anonymousSetter = Boolean.parseBoolean(args[2]);
+                anonymousSetter = args[2].equals("anonymous");
 
                 if (anonymousSetter && !hasPerm()) {
                     sender.sendMessage(Lang.INVALID_PERMISSIONS.toString());
