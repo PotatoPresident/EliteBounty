@@ -40,7 +40,7 @@ public class InfoCommand extends AbstractCommand {
         EliteBounty eliteBounty = EliteBounty.getInstance();
 
         if(args.length == 2) {
-            eliteBounty.getOfflinePlayerAsync(args[1], target -> {
+            eliteBounty.getOfflinePlayerAsync(args[1], target -> Bukkit.getScheduler().runTask(eliteBounty, () -> {
                 HashSet<Bounty> requestedBounties = eliteBounty.getBountiesOnTarget(target.getUniqueId());
 
                 if (requestedBounties != null) {
@@ -65,52 +65,49 @@ public class InfoCommand extends AbstractCommand {
                 } else {
                     sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
                 }
-            });
+            }));
         } else {
-            eliteBounty.getOfflinePlayerAsync(args[1], target1 -> {
-                eliteBounty.getOfflinePlayerAsync(args[1], target2 -> {
+            eliteBounty.getOfflinePlayerAsync(args[1], target1 -> eliteBounty.getOfflinePlayerAsync(args[2], target2 -> Bukkit.getScheduler().runTask(eliteBounty, () -> {
+                Bounty requestedBounty = eliteBounty.getBountyFromIds(target1.getUniqueId(), target2.getUniqueId());
 
-                    Bounty requestedBounty = eliteBounty.getBountyFromIds(target1.getUniqueId(), target2.getUniqueId());
+                if (requestedBounty == null) {
+                    sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
+                    return;
+                }
 
-                    if (requestedBounty == null) {
+                if (requestedBounty.anonymousSetter) {
+                    if (args.length <= 3) {
                         sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
                         return;
                     }
 
-                    if (requestedBounty.anonymousSetter) {
-                        if (args.length <= 3) {
-                            sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
-                            return;
-                        }
-
-                        if (!args[3].equals(EliteBounty.hiddenArg)) {
-                            sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
-                            return;
-                        }
+                    if (!args[3].equals(EliteBounty.hiddenArg)) {
+                        sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
+                        return;
                     }
+                }
 
-                    TextComponent rewardText = new TextComponent(String.format(Lang.BOUNTY_REWARD.toString(),
-                            requestedBounty.getFriendlyRewardName(),
-                            requestedBounty.bountyReward.getAmount()));
-                    rewardText.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/bounty reward " + args[1] + " " + args[2] + " " + EliteBounty.hiddenArg));
-                    rewardText.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click To View Reward").create()));
+                TextComponent rewardText = new TextComponent(String.format(Lang.BOUNTY_REWARD.toString(),
+                        requestedBounty.getFriendlyRewardName(),
+                        requestedBounty.bountyReward.getAmount()));
+                rewardText.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/bounty reward " + args[1] + " " + args[2] + " " + EliteBounty.hiddenArg));
+                rewardText.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click To View Reward").create()));
 
-                    sender.sendMessage(String.format(Lang.DIVIDER.toString(),
-                            "Bounty"));
+                sender.sendMessage(String.format(Lang.DIVIDER.toString(),
+                        "Bounty"));
 
-                    sender.sendMessage(String.format(Lang.BOUNTY_TARGET.toString(),
-                            Bukkit.getOfflinePlayer(requestedBounty.target).getName()));
+                sender.sendMessage(String.format(Lang.BOUNTY_TARGET.toString(),
+                        Bukkit.getOfflinePlayer(requestedBounty.target).getName()));
 
-                    sender.sendMessage(String.format(Lang.BOUNTY_OWNER.toString(),
-                            requestedBounty.anonymousSetter ? "Anonymous" : Bukkit.getOfflinePlayer(requestedBounty.setBy).getName()));
+                sender.sendMessage(String.format(Lang.BOUNTY_OWNER.toString(),
+                        requestedBounty.anonymousSetter ? "Anonymous" : Bukkit.getOfflinePlayer(requestedBounty.setBy).getName()));
 
-                    sender.sendMessage(String.format(Lang.BOUNTY_DATE.toString(),
-                            requestedBounty.setDate));
+                sender.sendMessage(String.format(Lang.BOUNTY_DATE.toString(),
+                        requestedBounty.setDate));
 
-                    sender.spigot().sendMessage(rewardText);
-                    return;
-                });
-            });
+                sender.spigot().sendMessage(rewardText);
+                return;
+            })));
 
         }
     }

@@ -1,5 +1,6 @@
 package us.potatoboy.elitebounty.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,30 +39,30 @@ public class RewardCommand extends AbstractCommand {
             return;
         }
 
-        EliteBounty.getInstance().getOfflinePlayerAsync(args[1], target1 -> {
-            EliteBounty.getInstance().getOfflinePlayerAsync(args[2], target2 -> {
-                Bounty requestedBounty = EliteBounty.getInstance().getBountyFromIds(target1.getUniqueId(), target2.getUniqueId());
+        EliteBounty eliteBounty = EliteBounty.getInstance();
 
-                if (requestedBounty == null) {
+        eliteBounty.getOfflinePlayerAsync(args[1], target1 -> eliteBounty.getOfflinePlayerAsync(args[2], target2 -> Bukkit.getScheduler().runTask(eliteBounty, () -> {
+            Bounty requestedBounty = EliteBounty.getInstance().getBountyFromIds(target1.getUniqueId(), target2.getUniqueId());
+
+            if (requestedBounty == null) {
+                sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
+                return;
+            }
+
+            if (requestedBounty.anonymousSetter) {
+                if (args.length <= 3) {
                     sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
                     return;
                 }
 
-                if (requestedBounty.anonymousSetter) {
-                    if (args.length <= 3) {
-                        sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
-                        return;
-                    }
-
-                    if (!args[3].equals(EliteBounty.hiddenArg)) {
-                        sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
-                        return;
-                    }
+                if (!args[3].equals(EliteBounty.hiddenArg)) {
+                    sender.sendMessage(Lang.NO_BOUNTY_ON_PLAYER.toString());
+                    return;
                 }
+            }
 
-                RewardMenu menu = new RewardMenu(requestedBounty.bountyReward);
-                menu.OpenInventory(((Player) sender).getPlayer());
-            });
-        });
+            RewardMenu menu = new RewardMenu(requestedBounty.bountyReward);
+            menu.OpenInventory(((Player) sender).getPlayer());
+        })));
     }
 }

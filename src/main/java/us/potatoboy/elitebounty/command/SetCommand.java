@@ -57,7 +57,7 @@ public class SetCommand extends AbstractCommand{
 
         EliteBounty eliteBounty = EliteBounty.getInstance();
 
-        eliteBounty.getOfflinePlayerAsync(args[1], target -> {
+        eliteBounty.getOfflinePlayerAsync(args[1], target -> Bukkit.getScheduler().runTask(eliteBounty, () -> {
             Player playerSender = (Player) sender;
 
             //check if target has played before and isn't themselves
@@ -216,6 +216,6 @@ public class SetCommand extends AbstractCommand{
             } else {
                 sender.sendMessage(Lang.BOUNTY_ERROR.toString());
             }
-        });
+        }));
     }
 }

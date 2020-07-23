@@ -11,7 +11,6 @@ import java.util.List;
 public class BountyTab implements TabCompleter {
 
     List<String> arguments = new ArrayList<>(Arrays.asList("set", "list", "info", "reward", "remove", "compass"));
-    List<String> trueFalse = new ArrayList<>(Arrays.asList("true", "false"));
 
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
 
