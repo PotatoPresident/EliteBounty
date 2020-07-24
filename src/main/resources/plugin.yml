@@ -1,7 +1,7 @@
 name: EliteBounty
 version: ${project.version}
 main: us.potatoboy.elitebounty.EliteBounty
-api-version: 1.16
+api-version: 1.13
 description: An item based bounty plugin
 authors: [potatoboy9999]
 commands:
